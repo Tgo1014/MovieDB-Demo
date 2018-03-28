@@ -13,6 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:adjustViewBounds="true"
+            android:contentDescription="@string/str_movie_poster"
             android:cropToPadding="true"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -26,12 +27,12 @@
 
         <View
             android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:background="@color/colorPrimaryDark"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="@id/item_movie_iv_movie"
-        app:layout_constraintStart_toStartOf="@id/item_movie_iv_movie"
-        app:layout_constraintTop_toBottomOf="@id/item_movie_iv_movie" />
+            android:layout_height="50dp"
+            android:background="@color/colorPrimaryDark"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@id/item_movie_iv_movie"
+            app:layout_constraintStart_toStartOf="@id/item_movie_iv_movie"
+            app:layout_constraintTop_toBottomOf="@id/item_movie_iv_movie" />
 
         <TextView
             android:id="@+id/item_movie_tv_title"

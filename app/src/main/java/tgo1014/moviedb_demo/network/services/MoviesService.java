@@ -4,7 +4,7 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import tgo1014.moviedb_demo.entities.Movie;
-import tgo1014.moviedb_demo.entities.MovieRequest;
+import tgo1014.moviedb_demo.entities.requests.MovieRequest;
 
 public interface MoviesService {
     @GET("movie/popular")

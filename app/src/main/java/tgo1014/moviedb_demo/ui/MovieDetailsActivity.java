@@ -4,7 +4,6 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -113,12 +112,12 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
             Glide.with(this)
                     .load(RestClient.BASE_URL_POSTER_SIZE_342 + movie.getPosterPath())
-                    .apply(new RequestOptions().placeholder(R.drawable.movie_placeholder).centerCrop())
+                    .apply(new RequestOptions().placeholder(R.drawable.ic_movie_placeholder).centerCrop())
                     .apply(new RequestOptions().centerCrop())
                     .into(detailActivityIvHeader);
             Glide.with(this)
                     .load(RestClient.BASE_URL_POSTER_SIZE_500 + movie.getPosterPath())
-                    .apply(new RequestOptions().placeholder(R.drawable.movie_placeholder).centerCrop())
+                    .apply(new RequestOptions().placeholder(R.drawable.ic_movie_placeholder).centerCrop())
                     .into(detailActivityIvPoster);
         }
     }

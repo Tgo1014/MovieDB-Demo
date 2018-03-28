@@ -12,7 +12,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import tgo1014.moviedb_demo.App;
 import tgo1014.moviedb_demo.entities.Movie;
-import tgo1014.moviedb_demo.entities.MovieRequest;
+import tgo1014.moviedb_demo.entities.requests.MovieRequest;
 import tgo1014.moviedb_demo.network.ApiResponse;
 import tgo1014.moviedb_demo.network.RestClient;
 import tgo1014.moviedb_demo.persistence.daos.MoviesDao;

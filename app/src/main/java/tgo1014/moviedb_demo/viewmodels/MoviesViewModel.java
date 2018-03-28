@@ -33,6 +33,7 @@ public class MoviesViewModel extends ViewModel {
         return moviesRepository.getMovieDetails(movieId);
     }
 
+    @SuppressWarnings("unchecked")
     public static class Factory extends ViewModelProvider.NewInstanceFactory {
         private int genreId;
 

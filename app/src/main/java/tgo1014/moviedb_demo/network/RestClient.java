@@ -33,7 +33,7 @@ public class RestClient {
             okHttpBuilder.addInterceptor(loggingInterceptor);
         }
 
-        intercepAndAddApiKey(okHttpBuilder);
+        interceptAndAddApiKey(okHttpBuilder);
 
         OkHttpClient client = okHttpBuilder.build();
 
@@ -62,7 +62,7 @@ public class RestClient {
         return genresService;
     }
 
-    private void intercepAndAddApiKey(OkHttpClient.Builder client) {
+    private void interceptAndAddApiKey(OkHttpClient.Builder client) {
         client.addInterceptor(chain -> {
             Request original = chain.request();
             HttpUrl originalHttpUrl = original.url();

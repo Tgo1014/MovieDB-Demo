@@ -9,4 +9,6 @@
     <string name="str_status">Status:</string>
     <string name="str_unable_to_refresh_data">Unable to refresh data</string>
     <string name="str_unable_to_get_movie_details">Unable to get movie details</string>
+    <string name="str_movie_poster">Movie Poster</string>
+    <string name="str_movie_poster_header">Movie Poster Header</string>
 </resources>
