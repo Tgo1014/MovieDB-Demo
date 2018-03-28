@@ -108,4 +108,46 @@ public class MoviesRepository {
             }
         }.asLiveData();
     }
+
+    public LiveData<Resource<Movie>> getMovieDetails(int movieId) {
+        return new NetworkBoundResource<Movie, Movie>(appExecutors) {
+            @Override
+            protected void saveCallResult(@NonNull Movie item) {
+                moviesDao.insert(item);
+            }
+
+            @Override
+            protected boolean shouldFetch(@Nullable Movie data) {
+                return true;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<Movie> loadFromDb() {
+                return moviesDao.getById(movieId);
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<Movie>> createCall() {
+                MediatorLiveData<ApiResponse<Movie>> liveData = new MediatorLiveData<>();
+                RestClient.getInstance().getMovieService().getMovieDetails(movieId).enqueue(new Callback<Movie>() {
+                    @Override
+                    public void onResponse(Call<Movie> call, Response<Movie> response) {
+                        if (response.isSuccessful()) {
+                            liveData.setValue(new ApiResponse<>(response));
+                            return;
+                        }
+                        onFailure(call, new Throwable(response.message()));
+                    }
+
+                    @Override
+                    public void onFailure(Call<Movie> call, Throwable t) {
+                        liveData.setValue(new ApiResponse<>(t));
+                    }
+                });
+                return liveData;
+            }
+        }.asLiveData();
+    }
 }

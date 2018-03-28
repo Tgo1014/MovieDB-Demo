@@ -10,7 +10,7 @@ import tgo1014.moviedb_demo.persistence.converters.IntegerListTypeConverter;
 import tgo1014.moviedb_demo.persistence.daos.GenreDao;
 import tgo1014.moviedb_demo.persistence.daos.MoviesDao;
 
-@Database(entities = {Movie.class, Genre.class}, version = 1, exportSchema = false)
+@Database(entities = {Movie.class, Genre.class}, version = 2, exportSchema = false)
 @TypeConverters({IntegerListTypeConverter.class})
 public abstract class MoviesAppDatabase extends RoomDatabase {
     public abstract MoviesDao moviesDao();

@@ -17,7 +17,7 @@ public interface MoviesDao {
     LiveData<List<Movie>> getAll();
 
     @Query("SELECT * FROM movies WHERE id = :id")
-    LiveData<Movie> getById(String id);
+    LiveData<Movie> getById(int id);
 
     @Query("SELECT * FROM movies WHERE genreIds LIKE :id")
     LiveData<List<Movie>> getByGenreId(String id);

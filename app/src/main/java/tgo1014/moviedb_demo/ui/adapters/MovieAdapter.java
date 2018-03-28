@@ -25,10 +25,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     private List<Movie> movieList;
     private Context context;
+    private OnMovieClickedListener listener;
 
-    public MovieAdapter(Context context, List<Movie> movieList) {
+    public MovieAdapter(Context context, List<Movie> movieList, OnMovieClickedListener listener) {
         this.movieList = movieList;
         this.context = context;
+        this.listener = listener;
     }
 
     @NonNull
@@ -41,14 +43,15 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
         Movie movie = movieList.get(holder.getAdapterPosition());
-        holder.movieTitle.setText(movie.getTitle());
 
+        holder.movieTitle.setText(movie.getTitle());
         Glide.with(context)
                 .load(RestClient.BASE_URL_POSTER_SIZE_185 + movie.getPosterPath())
                 .apply(new RequestOptions().placeholder(R.drawable.movie_placeholder).centerCrop())
                 .apply(new RequestOptions().centerCrop())
                 .into(holder.movieImage);
 
+        holder.movieImage.setOnClickListener(v -> listener.onMovieClick(movie.getId()));
     }
 
     @Override
@@ -73,15 +76,19 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         diffResult.dispatchUpdatesTo(this);
     }
 
-    public class MovieViewHolder extends RecyclerView.ViewHolder {
+    class MovieViewHolder extends RecyclerView.ViewHolder {
 
-        public ImageView movieImage;
-        public TextView movieTitle;
+        ImageView movieImage;
+        TextView movieTitle;
 
-        public MovieViewHolder(View itemView) {
+        MovieViewHolder(View itemView) {
             super(itemView);
             movieImage = itemView.findViewById(R.id.item_movie_iv_movie);
             movieTitle = itemView.findViewById(R.id.item_movie_tv_title);
         }
+    }
+
+    public interface OnMovieClickedListener {
+        void onMovieClick(int movieId);
     }
 }
