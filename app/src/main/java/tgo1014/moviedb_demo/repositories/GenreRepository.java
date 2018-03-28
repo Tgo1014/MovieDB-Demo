@@ -11,45 +11,45 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import tgo1014.moviedb_demo.App;
-import tgo1014.moviedb_demo.entities.Movie;
-import tgo1014.moviedb_demo.entities.MovieRequest;
+import tgo1014.moviedb_demo.entities.Genre;
+import tgo1014.moviedb_demo.entities.requests.GenreRequest;
 import tgo1014.moviedb_demo.network.ApiResponse;
 import tgo1014.moviedb_demo.network.RestClient;
-import tgo1014.moviedb_demo.persistence.daos.MoviesDao;
+import tgo1014.moviedb_demo.persistence.daos.GenreDao;
 import tgo1014.moviedb_demo.repositories.utils.NetworkBoundResource;
 import tgo1014.moviedb_demo.repositories.utils.Resource;
 import tgo1014.moviedb_demo.utils.AppExecutors;
 
-public class MoviesRepository {
+public class GenreRepository {
 
     private AppExecutors appExecutors = App.appExecutors;
-    private MoviesDao moviesDao = App.database.moviesDao();
+    private GenreDao genreDao = App.database.genreDao();
 
-    public LiveData<Resource<List<Movie>>> getMovies() {
-        return new NetworkBoundResource<List<Movie>, MovieRequest>(appExecutors) {
+    public LiveData<Resource<List<Genre>>> getGenres() {
+        return new NetworkBoundResource<List<Genre>, GenreRequest>(appExecutors) {
             @Override
-            protected void saveCallResult(@NonNull MovieRequest item) {
-                moviesDao.insert(item.getResults());
+            protected void saveCallResult(@NonNull GenreRequest item) {
+                genreDao.insert(item.getGenres());
             }
 
             @Override
-            protected boolean shouldFetch(@Nullable List<Movie> data) {
-                return true;
-            }
-
-            @NonNull
-            @Override
-            protected LiveData<List<Movie>> loadFromDb() {
-                return moviesDao.getAll();
+            protected boolean shouldFetch(@Nullable List<Genre> data) {
+                return data == null || data.isEmpty();
             }
 
             @NonNull
             @Override
-            protected LiveData<ApiResponse<MovieRequest>> createCall() {
-                MediatorLiveData<ApiResponse<MovieRequest>> liveData = new MediatorLiveData<>();
-                RestClient.getInstance().getMovieService().getPopularMoviesList().enqueue(new Callback<MovieRequest>() {
+            protected LiveData<List<Genre>> loadFromDb() {
+                return genreDao.getAll();
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<GenreRequest>> createCall() {
+                MediatorLiveData<ApiResponse<GenreRequest>> liveData = new MediatorLiveData<>();
+                RestClient.getInstance().getGenresService().getMoviesGenres().enqueue(new Callback<GenreRequest>() {
                     @Override
-                    public void onResponse(Call<MovieRequest> call, Response<MovieRequest> response) {
+                    public void onResponse(Call<GenreRequest> call, Response<GenreRequest> response) {
                         if (response.isSuccessful()) {
                             liveData.setValue(new ApiResponse<>(response));
                             return;
@@ -58,7 +58,7 @@ public class MoviesRepository {
                     }
 
                     @Override
-                    public void onFailure(Call<MovieRequest> call, Throwable t) {
+                    public void onFailure(Call<GenreRequest> call, Throwable t) {
                         liveData.setValue(new ApiResponse<>(t));
                     }
                 });
