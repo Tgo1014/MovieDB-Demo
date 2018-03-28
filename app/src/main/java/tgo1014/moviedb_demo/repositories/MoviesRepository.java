@@ -29,7 +29,7 @@ public class MoviesRepository {
         return new NetworkBoundResource<List<Movie>, MovieRequest>(appExecutors) {
             @Override
             protected void saveCallResult(@NonNull MovieRequest item) {
-                moviesDao.insert(item.getResults());
+                moviesDao.insertAll(item.getResults());
             }
 
             @Override
@@ -48,6 +48,48 @@ public class MoviesRepository {
             protected LiveData<ApiResponse<MovieRequest>> createCall() {
                 MediatorLiveData<ApiResponse<MovieRequest>> liveData = new MediatorLiveData<>();
                 RestClient.getInstance().getMovieService().getPopularMoviesList().enqueue(new Callback<MovieRequest>() {
+                    @Override
+                    public void onResponse(Call<MovieRequest> call, Response<MovieRequest> response) {
+                        if (response.isSuccessful()) {
+                            liveData.setValue(new ApiResponse<>(response));
+                            return;
+                        }
+                        onFailure(call, new Throwable(response.message()));
+                    }
+
+                    @Override
+                    public void onFailure(Call<MovieRequest> call, Throwable t) {
+                        liveData.setValue(new ApiResponse<>(t));
+                    }
+                });
+                return liveData;
+            }
+        }.asLiveData();
+    }
+
+    public LiveData<Resource<List<Movie>>> getMoviesByGenre(int genreId) {
+        return new NetworkBoundResource<List<Movie>, MovieRequest>(appExecutors) {
+            @Override
+            protected void saveCallResult(@NonNull MovieRequest item) {
+                moviesDao.insertAll(item.getResults());
+            }
+
+            @Override
+            protected boolean shouldFetch(@Nullable List<Movie> data) {
+                return true;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<List<Movie>> loadFromDb() {
+                return moviesDao.getByGenreId("%" + genreId + "%");
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<MovieRequest>> createCall() {
+                MediatorLiveData<ApiResponse<MovieRequest>> liveData = new MediatorLiveData<>();
+                RestClient.getInstance().getMovieService().getMoviesByGenre(genreId).enqueue(new Callback<MovieRequest>() {
                     @Override
                     public void onResponse(Call<MovieRequest> call, Response<MovieRequest> response) {
                         if (response.isSuccessful()) {

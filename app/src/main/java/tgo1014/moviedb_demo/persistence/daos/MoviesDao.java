@@ -19,10 +19,13 @@ public interface MoviesDao {
     @Query("SELECT * FROM movies WHERE id = :id")
     LiveData<Movie> getById(String id);
 
+    @Query("SELECT * FROM movies WHERE genreIds LIKE :id")
+    LiveData<List<Movie>> getByGenreId(String id);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Movie movie);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(List<Movie> movieList);
+    void insertAll(List<Movie> movieList);
 
 }
