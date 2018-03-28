@@ -90,7 +90,7 @@ public class MovieListFragment extends Fragment {
     public void showMovies(List<Movie> movieList) {
         movieFragmentProgressBar.setVisibility(View.GONE);
         movieFragmentRecyclerView.setVisibility(View.VISIBLE);
-        movieAdapter.addAll(movieList);
+        movieAdapter.updateMovieList(movieList);
     }
 
     public void setupRecyclerView() {

@@ -64,12 +64,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         }
     }
 
-    public void addAll(List<Movie> movieList) {
-        for (Movie movie : movieList) {
-            add(movie);
-        }
-    }
-
     public void updateMovieList(List<Movie> items) {
         final MovieDiffCallback diffCallback = new MovieDiffCallback(movieList, items);
         final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
