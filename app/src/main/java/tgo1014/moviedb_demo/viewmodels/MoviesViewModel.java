@@ -29,8 +29,12 @@ public class MoviesViewModel extends ViewModel {
         return moviesRepository.getMoviesByGenre(genreId);
     }
 
-    public static class Factory extends ViewModelProvider.NewInstanceFactory {
+    public LiveData<Resource<Movie>> getMovieDetail(int movieId){
+        return moviesRepository.getMovieDetails(movieId);
+    }
 
+    @SuppressWarnings("unchecked")
+    public static class Factory extends ViewModelProvider.NewInstanceFactory {
         private int genreId;
 
         public Factory(int genreId) {

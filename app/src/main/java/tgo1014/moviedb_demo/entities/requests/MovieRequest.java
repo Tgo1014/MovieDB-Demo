@@ -1,9 +1,11 @@
-package tgo1014.moviedb_demo.entities;
+package tgo1014.moviedb_demo.entities.requests;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
+
+import tgo1014.moviedb_demo.entities.Movie;
 
 public class MovieRequest {
 

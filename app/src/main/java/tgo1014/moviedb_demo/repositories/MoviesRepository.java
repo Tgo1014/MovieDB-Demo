@@ -12,7 +12,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import tgo1014.moviedb_demo.App;
 import tgo1014.moviedb_demo.entities.Movie;
-import tgo1014.moviedb_demo.entities.MovieRequest;
+import tgo1014.moviedb_demo.entities.requests.MovieRequest;
 import tgo1014.moviedb_demo.network.ApiResponse;
 import tgo1014.moviedb_demo.network.RestClient;
 import tgo1014.moviedb_demo.persistence.daos.MoviesDao;
@@ -101,6 +101,48 @@ public class MoviesRepository {
 
                     @Override
                     public void onFailure(Call<MovieRequest> call, Throwable t) {
+                        liveData.setValue(new ApiResponse<>(t));
+                    }
+                });
+                return liveData;
+            }
+        }.asLiveData();
+    }
+
+    public LiveData<Resource<Movie>> getMovieDetails(int movieId) {
+        return new NetworkBoundResource<Movie, Movie>(appExecutors) {
+            @Override
+            protected void saveCallResult(@NonNull Movie item) {
+                moviesDao.insert(item);
+            }
+
+            @Override
+            protected boolean shouldFetch(@Nullable Movie data) {
+                return true;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<Movie> loadFromDb() {
+                return moviesDao.getById(movieId);
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<Movie>> createCall() {
+                MediatorLiveData<ApiResponse<Movie>> liveData = new MediatorLiveData<>();
+                RestClient.getInstance().getMovieService().getMovieDetails(movieId).enqueue(new Callback<Movie>() {
+                    @Override
+                    public void onResponse(Call<Movie> call, Response<Movie> response) {
+                        if (response.isSuccessful()) {
+                            liveData.setValue(new ApiResponse<>(response));
+                            return;
+                        }
+                        onFailure(call, new Throwable(response.message()));
+                    }
+
+                    @Override
+                    public void onFailure(Call<Movie> call, Throwable t) {
                         liveData.setValue(new ApiResponse<>(t));
                     }
                 });

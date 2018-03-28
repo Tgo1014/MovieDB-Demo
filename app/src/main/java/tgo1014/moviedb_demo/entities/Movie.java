@@ -15,52 +15,94 @@ public class Movie {
     @SerializedName("id")
     @Expose
     private Integer id;
-    @SerializedName("vote_count")
+    @SerializedName("adult")
     @Expose
-    private Integer voteCount;
-    @SerializedName("video")
+    private Boolean adult;
+    @SerializedName("budget")
     @Expose
-    private Boolean video;
-    @SerializedName("vote_average")
+    private Integer budget;
+    @SerializedName("genre_ids")
     @Expose
-    private Double voteAverage;
-    @SerializedName("title")
+    private List<Integer> genreIds = null;
+    @SerializedName("homepage")
     @Expose
-    private String title;
-    @SerializedName("popularity")
+    private String homepage;
+    @SerializedName("imdb_id")
     @Expose
-    private Double popularity;
-    @SerializedName("poster_path")
-    @Expose
-    private String posterPath;
+    private String imdbId;
     @SerializedName("original_language")
     @Expose
     private String originalLanguage;
     @SerializedName("original_title")
     @Expose
     private String originalTitle;
-    @SerializedName("genre_ids")
-    @Expose
-    private List<Integer> genreIds = null;
-    @SerializedName("backdrop_path")
-    @Expose
-    private String backdropPath;
-    @SerializedName("adult")
-    @Expose
-    private Boolean adult;
     @SerializedName("overview")
     @Expose
     private String overview;
+    @SerializedName("popularity")
+    @Expose
+    private Double popularity;
+    @SerializedName("poster_path")
+    @Expose
+    private String posterPath;
     @SerializedName("release_date")
     @Expose
     private String releaseDate;
+    @SerializedName("revenue")
+    @Expose
+    private Integer revenue;
+    @SerializedName("runtime")
+    @Expose
+    private Integer runtime;
+    @SerializedName("status")
+    @Expose
+    private String status;
+    @SerializedName("tagline")
+    @Expose
+    private String tagline;
+    @SerializedName("title")
+    @Expose
+    private String title;
+    @SerializedName("video")
+    @Expose
+    private Boolean video;
+    @SerializedName("vote_average")
+    @Expose
+    private Double voteAverage;
+    @SerializedName("vote_count")
+    @Expose
+    private Integer voteCount;
 
-    public Integer getVoteCount() {
-        return voteCount;
+    public Boolean getAdult() {
+        return adult;
     }
 
-    public void setVoteCount(Integer voteCount) {
-        this.voteCount = voteCount;
+    public void setAdult(Boolean adult) {
+        this.adult = adult;
+    }
+
+    public Integer getBudget() {
+        return budget;
+    }
+
+    public void setBudget(Integer budget) {
+        this.budget = budget;
+    }
+
+    public List<Integer> getGenreIds() {
+        return genreIds;
+    }
+
+    public void setGenreIds(List<Integer> genreIds) {
+        this.genreIds = genreIds;
+    }
+
+    public String getHomepage() {
+        return homepage;
+    }
+
+    public void setHomepage(String homepage) {
+        this.homepage = homepage;
     }
 
     public Integer getId() {
@@ -71,44 +113,12 @@ public class Movie {
         this.id = id;
     }
 
-    public Boolean getVideo() {
-        return video;
+    public String getImdbId() {
+        return imdbId;
     }
 
-    public void setVideo(Boolean video) {
-        this.video = video;
-    }
-
-    public Double getVoteAverage() {
-        return voteAverage;
-    }
-
-    public void setVoteAverage(Double voteAverage) {
-        this.voteAverage = voteAverage;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Double getPopularity() {
-        return popularity;
-    }
-
-    public void setPopularity(Double popularity) {
-        this.popularity = popularity;
-    }
-
-    public String getPosterPath() {
-        return posterPath;
-    }
-
-    public void setPosterPath(String posterPath) {
-        this.posterPath = posterPath;
+    public void setImdbId(String imdbId) {
+        this.imdbId = imdbId;
     }
 
     public String getOriginalLanguage() {
@@ -127,30 +137,6 @@ public class Movie {
         this.originalTitle = originalTitle;
     }
 
-    public List<Integer> getGenreIds() {
-        return genreIds;
-    }
-
-    public void setGenreIds(List<Integer> genreIds) {
-        this.genreIds = genreIds;
-    }
-
-    public String getBackdropPath() {
-        return backdropPath;
-    }
-
-    public void setBackdropPath(String backdropPath) {
-        this.backdropPath = backdropPath;
-    }
-
-    public Boolean getAdult() {
-        return adult;
-    }
-
-    public void setAdult(Boolean adult) {
-        this.adult = adult;
-    }
-
     public String getOverview() {
         return overview;
     }
@@ -159,12 +145,92 @@ public class Movie {
         this.overview = overview;
     }
 
+    public Double getPopularity() {
+        return popularity;
+    }
+
+    public void setPopularity(Double popularity) {
+        this.popularity = popularity;
+    }
+
+    public String getPosterPath() {
+        return posterPath;
+    }
+
+    public void setPosterPath(String posterPath) {
+        this.posterPath = posterPath;
+    }
+
     public String getReleaseDate() {
         return releaseDate;
     }
 
     public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
+    }
+
+    public Integer getRevenue() {
+        return revenue;
+    }
+
+    public void setRevenue(Integer revenue) {
+        this.revenue = revenue;
+    }
+
+    public Integer getRuntime() {
+        return runtime;
+    }
+
+    public void setRuntime(Integer runtime) {
+        this.runtime = runtime;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getTagline() {
+        return tagline;
+    }
+
+    public void setTagline(String tagline) {
+        this.tagline = tagline;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Boolean getVideo() {
+        return video;
+    }
+
+    public void setVideo(Boolean video) {
+        this.video = video;
+    }
+
+    public Double getVoteAverage() {
+        return voteAverage;
+    }
+
+    public void setVoteAverage(Double voteAverage) {
+        this.voteAverage = voteAverage;
+    }
+
+    public Integer getVoteCount() {
+        return voteCount;
+    }
+
+    public void setVoteCount(Integer voteCount) {
+        this.voteCount = voteCount;
     }
 
     @Override

@@ -23,7 +23,7 @@ import tgo1014.moviedb_demo.entities.Movie;
 import tgo1014.moviedb_demo.ui.adapters.MovieAdapter;
 import tgo1014.moviedb_demo.viewmodels.MoviesViewModel;
 
-public class MovieListFragment extends Fragment {
+public class MovieListFragment extends Fragment implements MovieAdapter.OnMovieClickedListener {
 
     private static final String MOVIE_GENRE_ID = "MOVIE_GENRE_ID";
 
@@ -73,6 +73,9 @@ public class MovieListFragment extends Fragment {
                         if (data.data != null) showMovies(data.data);
                         break;
                     case LOADING:
+                        Toast.makeText(getContext(),
+                                data.message == null || data.message.isEmpty() ? getString(R.string.str_unable_to_refresh_data) : data.message,
+                                Toast.LENGTH_SHORT).show();
                         if (data.data != null) {
                             showMovies(data.data);
                             return;
@@ -94,7 +97,7 @@ public class MovieListFragment extends Fragment {
     }
 
     public void setupRecyclerView() {
-        movieAdapter = new MovieAdapter(getContext(), new ArrayList<>());
+        movieAdapter = new MovieAdapter(getContext(), new ArrayList<>(), this);
         movieFragmentRecyclerView.setAdapter(movieAdapter);
         movieFragmentRecyclerView.setHasFixedSize(true);
         movieFragmentRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), calculateNoOfColumns()));
@@ -115,4 +118,8 @@ public class MovieListFragment extends Fragment {
         return (int) (dpWidth / 120);
     }
 
+    @Override
+    public void onMovieClick(int movieId) {
+        MovieDetailsActivity.start(getContext(), movieId);
+    }
 }
