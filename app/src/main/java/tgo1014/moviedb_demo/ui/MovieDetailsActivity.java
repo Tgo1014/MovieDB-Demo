@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -11,6 +12,7 @@ import android.text.method.LinkMovementMethod;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -82,6 +84,9 @@ public class MovieDetailsActivity extends AppCompatActivity {
                         configureFields(data.data);
                         break;
                     case ERROR:
+                        Toast.makeText(this,
+                                data.message == null || data.message.isEmpty() ? getString(R.string.str_unable_to_get_movie_details) : data.message,
+                                Toast.LENGTH_SHORT).show();
                         break;
                     case LOADING:
                         configureFields(data.data);

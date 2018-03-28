@@ -6,6 +6,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addDefaultHomeTab(ViewPagerAdapter adapter) {
-        adapter.add(0, getString(R.string.str_home));
+        adapter.add(0, getString(R.string.str_popular));
     }
 
     private void subscribeToVM(GenresViewModel genresViewModel) {
@@ -57,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
                         configureGenreTabsWithData(data.data, mainActivityViewPager);
                         break;
                     case ERROR:
+                        Toast.makeText(this,
+                                data.message == null || data.message.isEmpty() ? getString(R.string.str_unable_to_refresh_data) : data.message,
+                                Toast.LENGTH_SHORT).show();
                         break;
                     case LOADING:
                         configureGenreTabsWithData(data.data, mainActivityViewPager);

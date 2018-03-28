@@ -73,6 +73,9 @@ public class MovieListFragment extends Fragment implements MovieAdapter.OnMovieC
                         if (data.data != null) showMovies(data.data);
                         break;
                     case LOADING:
+                        Toast.makeText(getContext(),
+                                data.message == null || data.message.isEmpty() ? getString(R.string.str_unable_to_refresh_data) : data.message,
+                                Toast.LENGTH_SHORT).show();
                         if (data.data != null) {
                             showMovies(data.data);
                             return;
