@@ -111,12 +111,12 @@ public class MovieDetailsActivity extends AppCompatActivity {
             if (movie.getHomepage() == null) detailActivityTvHomepageContent.setText("-");
 
             Glide.with(this)
-                    .load(RestClient.BASE_URL_POSTER_SIZE_342 + movie.getPosterPath())
+                    .load(RestClient.BASE_URL_POSTER_SIZE_500 + movie.getPosterPath())
                     .apply(new RequestOptions().placeholder(R.drawable.ic_movie_placeholder).centerCrop())
                     .apply(new RequestOptions().centerCrop())
                     .into(detailActivityIvHeader);
             Glide.with(this)
-                    .load(RestClient.BASE_URL_POSTER_SIZE_500 + movie.getPosterPath())
+                    .load(RestClient.BASE_URL_POSTER_SIZE_342 + movie.getPosterPath())
                     .apply(new RequestOptions().placeholder(R.drawable.ic_movie_placeholder).centerCrop())
                     .into(detailActivityIvPoster);
         }
