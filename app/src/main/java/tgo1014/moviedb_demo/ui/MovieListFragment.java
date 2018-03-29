@@ -21,6 +21,7 @@ import java.util.List;
 import tgo1014.moviedb_demo.R;
 import tgo1014.moviedb_demo.entities.Movie;
 import tgo1014.moviedb_demo.ui.adapters.MovieAdapter;
+import tgo1014.moviedb_demo.utils.EndlessRecyclerViewScrollListener;
 import tgo1014.moviedb_demo.viewmodels.MoviesViewModel;
 
 public class MovieListFragment extends Fragment implements MovieAdapter.OnMovieClickedListener {
@@ -62,7 +63,7 @@ public class MovieListFragment extends Fragment implements MovieAdapter.OnMovieC
         movieFragmentProgressBar = view.findViewById(R.id.fragment_movie_progress_bar);
         movieFragmentRecyclerView = view.findViewById(R.id.fragment_movie_recycler_movie_list);
 
-        setupRecyclerView();
+        setupRecyclerView(moviesVM);
     }
 
     private void subscribeToVM(MoviesViewModel moviesVM) {
@@ -70,7 +71,12 @@ public class MovieListFragment extends Fragment implements MovieAdapter.OnMovieC
             if (data != null) {
                 switch (data.status) {
                     case SUCCESS:
-                        if (data.data != null) showMovies(data.data);
+                        if (data.data != null && !data.data.isEmpty()) {
+                            showMovies(data.data);
+                            moviesVM.setLoading(false);
+                            return;
+                        }
+                        moviesVM.setLastPageReached(true);
                         break;
                     case LOADING:
                         if (data.data != null) {
@@ -92,15 +98,24 @@ public class MovieListFragment extends Fragment implements MovieAdapter.OnMovieC
     public void showMovies(List<Movie> movieList) {
         movieFragmentProgressBar.setVisibility(View.GONE);
         movieFragmentRecyclerView.setVisibility(View.VISIBLE);
-        movieAdapter.updateMovieList(movieList);
+        movieAdapter.addAll(movieList);
     }
 
-    public void setupRecyclerView() {
+    public void setupRecyclerView(MoviesViewModel moviesVM) {
         movieAdapter = new MovieAdapter(getContext(), new ArrayList<>(), this);
         movieFragmentRecyclerView.setAdapter(movieAdapter);
         movieFragmentRecyclerView.setHasFixedSize(true);
-        movieFragmentRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), calculateNoOfColumns()));
         movieFragmentRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        GridLayoutManager glm = new GridLayoutManager(getActivity(), calculateNoOfColumns());
+        movieFragmentRecyclerView.setLayoutManager(glm);
+        movieFragmentRecyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener(glm) {
+            @Override
+            public void onLoadMore(int totalItemsCount, RecyclerView view) {
+                moviesVM.loadNextPage();
+                moviesVM.setLoading(true);
+            }
+        });
+
     }
 
     public static MovieListFragment newInstance(Integer genreId) {

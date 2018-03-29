@@ -25,7 +25,7 @@ public class MoviesRepository {
     private AppExecutors appExecutors = App.appExecutors;
     private MoviesDao moviesDao = App.database.moviesDao();
 
-    public LiveData<Resource<List<Movie>>> getMovies() {
+    public LiveData<Resource<List<Movie>>> getMovies(int page) {
         return new NetworkBoundResource<List<Movie>, MovieRequest>(appExecutors) {
             @Override
             protected void saveCallResult(@NonNull MovieRequest item) {
@@ -47,7 +47,7 @@ public class MoviesRepository {
             @Override
             protected LiveData<ApiResponse<MovieRequest>> createCall() {
                 MediatorLiveData<ApiResponse<MovieRequest>> liveData = new MediatorLiveData<>();
-                RestClient.getInstance().getMovieService().getPopularMoviesList().enqueue(new Callback<MovieRequest>() {
+                RestClient.getInstance().getMovieService().getPopularMoviesList(page).enqueue(new Callback<MovieRequest>() {
                     @Override
                     public void onResponse(Call<MovieRequest> call, Response<MovieRequest> response) {
                         if (response.isSuccessful()) {
@@ -67,7 +67,7 @@ public class MoviesRepository {
         }.asLiveData();
     }
 
-    public LiveData<Resource<List<Movie>>> getMoviesByGenre(int genreId) {
+    public LiveData<Resource<List<Movie>>> getMoviesByGenre(int genreId, int page) {
         return new NetworkBoundResource<List<Movie>, MovieRequest>(appExecutors) {
             @Override
             protected void saveCallResult(@NonNull MovieRequest item) {
@@ -89,7 +89,7 @@ public class MoviesRepository {
             @Override
             protected LiveData<ApiResponse<MovieRequest>> createCall() {
                 MediatorLiveData<ApiResponse<MovieRequest>> liveData = new MediatorLiveData<>();
-                RestClient.getInstance().getMovieService().getMoviesByGenre(genreId).enqueue(new Callback<MovieRequest>() {
+                RestClient.getInstance().getMovieService().getMoviesByGenre(genreId, page).enqueue(new Callback<MovieRequest>() {
                     @Override
                     public void onResponse(Call<MovieRequest> call, Response<MovieRequest> response) {
                         if (response.isSuccessful()) {
