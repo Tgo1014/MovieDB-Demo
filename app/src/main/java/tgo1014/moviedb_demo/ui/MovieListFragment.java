@@ -133,7 +133,7 @@ public class MovieListFragment extends Fragment implements MovieAdapter.OnMovieC
     }
 
     @Override
-    public void onMovieClick(int movieId) {
-        MovieDetailsActivity.start(getContext(), movieId);
+    public void onMovieClick(int movieId, View posterImageView) {
+        MovieDetailsActivity.startWithAnimation(getContext(), getActivity(), movieId, posterImageView);
     }
 }

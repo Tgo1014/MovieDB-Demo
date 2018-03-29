@@ -2,6 +2,7 @@ package tgo1014.moviedb_demo.ui.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -52,7 +53,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
                     .apply(new RequestOptions().centerCrop())
                     .into(holder.movieImage);
 
-        holder.movieImage.setOnClickListener(v -> listener.onMovieClick(movie.getId()));
+        ViewCompat.setTransitionName(holder.movieImage, movie.getId().toString()); //needed for shared element transition
+
+        holder.movieImage.setOnClickListener(v -> listener.onMovieClick(movie.getId(), holder.movieImage));
     }
 
     @Override
@@ -96,6 +99,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     }
 
     public interface OnMovieClickedListener {
-        void onMovieClick(int movieId);
+        void onMovieClick(int movieId, View posterImageView);
     }
 }
