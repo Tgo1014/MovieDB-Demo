@@ -45,11 +45,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         Movie movie = movieList.get(holder.getAdapterPosition());
 
         holder.movieTitle.setText(movie.getTitle());
-        Glide.with(context)
-                .load(RestClient.BASE_URL_POSTER_SIZE_185 + movie.getPosterPath())
-                .apply(new RequestOptions().placeholder(R.drawable.movie_placeholder).centerCrop())
-                .apply(new RequestOptions().centerCrop())
-                .into(holder.movieImage);
+        if (movie.getPosterPath() != null)
+            Glide.with(context)
+                    .load(RestClient.BASE_URL_POSTER_SIZE_185 + movie.getPosterPath())
+                    .apply(new RequestOptions().placeholder(R.drawable.movie_placeholder).centerCrop())
+                    .apply(new RequestOptions().centerCrop())
+                    .into(holder.movieImage);
 
         holder.movieImage.setOnClickListener(v -> listener.onMovieClick(movie.getId()));
     }
@@ -67,7 +68,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         }
     }
 
-    public void updateMovieList(List<Movie> items) {
+    public void addAll(List<Movie> movieList) {
+        for (Movie movie : movieList) {
+            add(movie);
+        }
+    }
+
+    private void updateMovieList(List<Movie> items) {
         final MovieDiffCallback diffCallback = new MovieDiffCallback(movieList, items);
         final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
 
