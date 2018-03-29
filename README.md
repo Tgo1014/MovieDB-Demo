@@ -9,8 +9,8 @@ App developed using [The Movie Database API](https://developers.themoviedb.org) 
   - Gson
   - Offline Support  
 # TODO
-  - [ ] Pagination (infinite scroll)
-  - [ ] Animations
+  - [X] Pagination (infinite scroll)
+  - [X] Animations
   - [ ] Better genre filter 
 # Images
 ![](https://github.com/Tgo1014/MovieDB-Demo/raw/master/screenshots/main.jpg) 
