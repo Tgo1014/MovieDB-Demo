@@ -14,7 +14,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        database = Room.databaseBuilder(this, MoviesAppDatabase.class, "movies_app_database.db").build();
+        database = Room.databaseBuilder(this, MoviesAppDatabase.class, "movies_app_database.db").fallbackToDestructiveMigration().build();
         appExecutors = new AppExecutors();
     }
 }

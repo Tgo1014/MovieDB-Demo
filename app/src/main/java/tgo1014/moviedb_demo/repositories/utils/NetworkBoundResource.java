@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package tgo1014.moviedb_demo.repositories;
+package tgo1014.moviedb_demo.repositories.utils;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
@@ -42,7 +42,7 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
     private final MediatorLiveData<Resource<ResultType>> result = new MediatorLiveData<>();
 
     @MainThread
-    NetworkBoundResource(AppExecutors appExecutors) {
+    public NetworkBoundResource(AppExecutors appExecutors) {
         this.appExecutors = appExecutors;
         result.setValue(Resource.<ResultType>loading(null));
         final LiveData<ResultType> dbSource = loadFromDb();

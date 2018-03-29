@@ -1,4 +1,4 @@
-package tgo1014.moviedb_demo.repositories;
+package tgo1014.moviedb_demo.repositories.utils;
 /*
  * Copyright (C) 2017 The Android Open Source Project
  *

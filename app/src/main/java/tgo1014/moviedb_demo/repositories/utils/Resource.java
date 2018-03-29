@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tgo1014.moviedb_demo.repositories;
+package tgo1014.moviedb_demo.repositories.utils;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import static tgo1014.moviedb_demo.repositories.Status.ERROR;
-import static tgo1014.moviedb_demo.repositories.Status.LOADING;
-import static tgo1014.moviedb_demo.repositories.Status.SUCCESS;
+import static tgo1014.moviedb_demo.repositories.utils.Status.ERROR;
+import static tgo1014.moviedb_demo.repositories.utils.Status.LOADING;
+import static tgo1014.moviedb_demo.repositories.utils.Status.SUCCESS;
 
 /**
  * A generic class that holds a value with its loading status.
